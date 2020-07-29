@@ -1,43 +1,37 @@
-from bs4 import BeautifulSoup
-import requests
-import os,sys,random,time
-p = '\x1b[0m'
-m = '\x1b[91m'
-h = '\x1b[92m'
-k = '\x1b[93m'
-bi = '\x1b[94m'
-u = '\x1b[95m'
-bm = '\x1b[96m'
-bgm = '\x1b[41m'
-bgp = '\x1b[47m'
-res = '\x1b[40m'
-def jalan(s):
-        for c in s + '\n':
-                sys.stdout.write(c)
-                sys.stdout.flush()
-                time.sleep(random.random() * 0.1)
-def download(link):
-	try:
-		a=requests.post('http://online-web-master.000webhostapp.com/main/fb1.php',data={"v":link}).text
-		b=BeautifulSoup(a,'html.parser')
-		print('\t'+m+'['+k+'!'+m+']'+h+' link :'+k+' %s' % b.iframe['src'])
-		ada=b.iframe['src']
-		lin=raw_input('\t'+m+'['+k+'?'+m+']'+h+' Output File : '+k)
-		jalan('\t'+m+'['+k+'!'+m+']'+h+' sedang mendownload.......')
-		os.system('curl -o "'+lin+'.mp4" "'+ada+'"')
-		jalan('\t'+m+'['+k+'!'+m+']'+h+' selesai nama file '+lin+'.mp4')
-	except requests.exceptions.ConnectionError:
-		jalan('\t'+m+'['+k+'!'+m+']'+h+' tidak ada koneksi'+p)
-		exit()
-def url():
-	os.system('clear')
-	os.system('toilet -f mono9 -F gay "FB DOWNLOAD"')
-	link=raw_input('\t'+m+'['+k+'?'+m+']'+h+' tautan FB : '+k)
-	if (link=='' or link==' '):
-		jalan('\t'+m+'['+k+'!'+m+']'+h+'yg anda masukan salah') 
-		time.sleep(1)
-		url()
-	else:
-		download(link)
-#https://www.facebook.com/yummyIDN/videos/250198305662858/?app=fbl
-url()
+<?php
+function curl($url) {
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_5; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Chrome/9.0.597.15 Safari/534.13");
+    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+    $content = curl_exec($curl);
+    curl_close($curl);
+    return $content;
+}
+system("clear");
+echo "                                                                                                    
+ _____ _____    _____ _____ ____  _____ _____    ____  _____ _ _ _ _____ __    _____ _____ ____  _____ _____ 
+|   __| __  |  |  |  |     |    \|   __|     |  |    \|     | | | |   | |  |  |     |  _  |    \|   __| __  |
+|   __| __ -|  |  |  |-   -|  |  |   __|  |  |  |  |  |  |  | | | | | | |  |__|  |  |     |  |  |   __|    -|
+|__|  |_____|   \___/|_____|____/|_____|_____|  |____/|_____|_____|_|___|_____|_____|__|__|____/|_____|__|__|
+
+                                                VERSION 1.0.0
+                                             CREATED BY R3D#@X0r
+                                                                                                             
+";
+echo "\n\n";
+echo "[#] Enter Video URL (https://www.facebook.com/user/video/id) : ";
+$v = trim(fgets(STDIN, 1024));
+echo "\n\n[#] Enter Video Name To Save As : ";
+$name = trim(fgets(STDIN, 1024));
+$url = str_replace('www', 'mbasic', $v);
+$s = curl($url);
+//echo $s;
+$vurl = preg_match('/<a href=\"\/video_redirect\/\?src\=(.*?)\"/ims', $s, $matches) ? $matches[1] : null;
+$vu = urldecode($vurl);
+echo "\n\n[+] Downloading... \n\n\n";
+$d = 'wget -O "' . $name . '.mp4" --user-agent="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6" "' . $vu . '" -q --show-progress';
+system($d);
+echo "\n\n[+] Done.. Saved As : " . $name . ".mp4\n\n";
+exit(0);
+?>
